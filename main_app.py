@@ -1,0 +1,44 @@
+import streamlit as st
+from firestore_integration import get_google_cloud_credentials, fetch_users, add_user_by_name
+#, show_all_users, show_one_user, update_one_user
+import pandas as pd
+
+def set_up_credentials():
+    if 'credentials' not in st.session_state:
+        jstr = st.secrets.get('GOOGLE_KEY')
+        credentials = get_google_cloud_credentials(jstr)
+        st.session_state['credentials']=credentials
+    return st.session_state['credentials']
+
+def show_all_users(creds):
+    s1=fetch_users(creds)
+    df=pd.DataFrame(s1)
+    st.dataframe(df, hide_index=True)
+
+def show_one_user(creds):
+    s1=fetch_users(creds)
+    names=[s.get('name') for s in s1]
+    emails=[s.get('email') for s in s1]
+    map=dict(zip(names,emails))
+    option = st.selectbox("User",names,index=None)
+    if option:
+        prv=map[option]
+        st.text(f"{prv}")
+
+
+def add_one_user(creds):
+    name=st.text_input("Name")
+    email=st.text_area("Email")
+    if st.button("Insert"):
+        s=add_user_by_name(creds, name,email)
+        st.write(s)
+
+def main_app():
+    creds=set_up_credentials()
+    col1,col2,col3=st.tabs(['User List','User Detail','Insert'])
+    with col1:
+        show_all_users(creds)
+    with col2:
+        show_one_user(creds)
+    with col3:
+        add_one_user(creds)
