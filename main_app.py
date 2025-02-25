@@ -19,11 +19,13 @@ def show_one_user(creds):
     s1=fetch_users(creds)
     names=[s.get('name') for s in s1]
     emails=[s.get('email') for s in s1]
+    records=[s for s in s1]
     map=dict(zip(names,emails))
+    map_records=dict(zip(names,records))
     option = st.selectbox("User",names,index=None)
     if option:
-        prv=map[option]
-        st.text(f"{prv}")
+        prv=map_records[option]
+        st.dataframe(prv, hide_index=False)
 
 
 def add_one_user(creds):
