@@ -1,5 +1,5 @@
 import streamlit as st
-from firestore_integration import get_google_cloud_credentials, fetch_users, add_user_by_name
+from firestore_integration import get_google_cloud_credentials, fetch_users, add_user_by_information
 #, show_all_users, show_one_user, update_one_user
 import pandas as pd
 
@@ -30,7 +30,8 @@ def add_one_user(creds):
     name=st.text_input("Name")
     email=st.text_area("Email")
     if st.button("Insert"):
-        s=add_user_by_name(creds, name,email)
+        user_record={'name':name,'email':email}
+        s=add_user_by_information(creds, user_record)
         st.write(s)
 
 def main_app():
