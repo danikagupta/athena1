@@ -61,5 +61,6 @@ else:
     #main_code()
     set_up_credentials()
     main_app()
-    if st.sidebar.button("Log out", type="secondary", icon=":material/logout:"):
+    if st.sidebar.button("Log out", type="primary", icon=":material/logout:"):
+        st.session_state.clear()
         st.logout()

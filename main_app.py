@@ -33,7 +33,7 @@ def initialize_user():
 
     if email is None:
         #placeholder = st.empty()
-        st.error("No email found. Please try a different log-in.")
+        st.error("No email found. Please try to log in with your Google Account.")
         time.sleep(5)
         #placeholder.empty()
         st.logout()
@@ -78,10 +78,17 @@ def add_one_user(creds):
 def main_app():
     creds=set_up_credentials()
     initialize_user()
-    col1,col2,col3=st.tabs(['User List','User Detail','Insert'])
-    with col1:
-        show_all_users(creds)
-    with col2:
-        show_one_user(creds)
-    with col3:
-        add_one_user(creds)
+    if st.session_state.role == "admin":
+        st.navigation(["User", "Admin"], default="Admin")
+        st.switch_page("pages/admin.py")
+    elif st.session_state.role == "user":
+        st.navigation(["User"], default="User")
+        st.switch_page("pages/user.py")
+    
+    #col1,col2,col3=st.tabs(['User List','User Detail','Insert'])
+    #with col1:
+    #    show_all_users(creds)
+    #with col2:
+    #    show_one_user(creds)
+    #with col3:
+    #    add_one_user(creds)
