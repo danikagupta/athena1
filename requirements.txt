@@ -3,3 +3,12 @@ Authlib
 
 google-cloud-firestore
 google-auth
+
+langchain
+langchain-community
+langchain-core
+langchain-openai
+langchain-groq
+
+pydantic 
+typing

@@ -24,6 +24,26 @@ def fetch_users(credentials):
     results = [{'id': doc.id, **doc.to_dict()} for doc in docs]
     return results
 
+def fetch_userinputs(credentials):
+    db = firestore.Client(credentials=credentials)
+    collection_ref = db.collection(u'UserInputs')
+    #query = collection_ref.where('status', '==', 'transcripted')
+    docs = collection_ref.stream()
+    
+    # Collect document IDs that match the query
+    results = [{'id': doc.id, **doc.to_dict()} for doc in docs]
+    return results
+
+def fetch_actionitems(credentials):
+    db = firestore.Client(credentials=credentials)
+    collection_ref = db.collection(u'ActionItems')
+    #query = collection_ref.where('status', '==', 'transcripted')
+    docs = collection_ref.stream()
+    
+    # Collect document IDs that match the query
+    results = [{'id': doc.id, **doc.to_dict()} for doc in docs]
+    return results
+
 def fetch_users_by_name(credentials,name):
     db = firestore.Client(credentials=credentials)
     collection_ref = db.collection(u'Users')
@@ -55,6 +75,19 @@ def add_user(credentials, incoming_record):
 
     incoming_record.setdefault("creationDate", firestore.SERVER_TIMESTAMP)
     collection_ref.set(incoming_record)
+
+def add_userinput_by_information(credentials, incoming_record):
+    db = firestore.Client(credentials=credentials)
+    collection_ref = db.collection(u'UserInputs').document() 
+    incoming_record.setdefault("creationDate", firestore.SERVER_TIMESTAMP)
+    collection_ref.set(incoming_record)
+
+def add_actionItem_list(credentials, record_list):
+    db = firestore.Client(credentials=credentials)
+    collection_ref = db.collection(u'ActionItems')
+    for record in record_list:
+        record.setdefault("creationDate", firestore.SERVER_TIMESTAMP)
+        collection_ref.add(record)
 
 def add_user_by_information(credentials, incoming_record):
     email=incoming_record.get('email')

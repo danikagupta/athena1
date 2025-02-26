@@ -6,6 +6,12 @@ import authlib
 from firestore_integration import get_google_cloud_credentials
 from main_app import main_app, set_up_credentials
 
+import os
+os.environ["LANGCHAIN_TRACING_V2"]="true"
+os.environ["LANGCHAIN_API_KEY"]=st.secrets['LANGCHAIN_API_KEY']
+os.environ["LANGCHAIN_PROJECT"]="ProjectAthena"
+os.environ['LANGCHAIN_ENDPOINT']="https://api.smith.langchain.com"
+
 st.title("Athena App 1")
 
 

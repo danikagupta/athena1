@@ -49,31 +49,6 @@ def initialize_user():
             st.session_state['role']=role
             st.sidebar.write(f"Role: {role}")
 
-def show_all_users(creds):
-    s1=fetch_users(creds)
-    df=pd.DataFrame(s1)
-    st.dataframe(df, hide_index=True)
-
-def show_one_user(creds):
-    s1=fetch_users(creds)
-    names=[s.get('name') for s in s1]
-    emails=[s.get('email') for s in s1]
-    records=[s for s in s1]
-    map=dict(zip(names,emails))
-    map_records=dict(zip(names,records))
-    option = st.selectbox("User",names,index=None)
-    if option:
-        prv=map_records[option]
-        st.dataframe(prv, hide_index=False)
-
-
-def add_one_user(creds):
-    name=st.text_input("Name")
-    email=st.text_area("Email")
-    if st.button("Insert"):
-        user_record={'name':name,'email':email}
-        s=add_user_by_information(creds, user_record)
-        st.write(s)
 
 def main_app():
     creds=set_up_credentials()
