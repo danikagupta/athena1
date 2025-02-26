@@ -44,6 +44,9 @@ def create_llm_message(userinput_record):
         - Team
         - Due Date
 
+        Team can be any of the following: Engineering, Marketing, Sales, Support, Operations, Finance, Legal, HR, Coordinator, Other
+        For "Schedule weekly meeting for Therapy project", Team should be Coordinator.
+
         Today is {date.today()}. If you do not know teh due date for an item, assume one week from today.
     """
 
