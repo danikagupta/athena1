@@ -12,3 +12,13 @@ langchain-groq
 
 pydantic 
 typing
+
+# For Slackbot
+python-dotenv
+slack_sdk
+
+google-api-python-client
+google-cloud
+google-auth
+
+langgraph
